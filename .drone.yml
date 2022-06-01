@@ -29,10 +29,10 @@ steps:
     volumes:
       - name: docker
         path: /var/run/docker.sock
-    #when:
-      #event:
-        #- tag
-        #- pull_request
+    when:
+      event:
+        - tag
+        - pull_request
 
   - name: github_binary_release
     image: luistt/drone-images:v0.0.5-github-s390x
@@ -47,8 +47,8 @@ steps:
       #ref:
       #- refs/head/master
       #- refs/tags/*
-      #event:
-      #- tag
+      event:
+      - tag
 
 volumes:
   - name: docker

@@ -14,7 +14,7 @@ clone:
 steps:
   - name: clone
     pull: if-not-exists
-    image: alpine/git:v2.30.2-s390x
+    image: luistt/drone-images:v0.0.3-git-s390x
     commands:
       - git clone $DRONE_GIT_HTTP_URL  .
       - git fetch origin $DRONE_COMMIT_REF
@@ -29,13 +29,13 @@ steps:
     volumes:
       - name: docker
         path: /var/run/docker.sock
-    when:
-      event:
-        - tag
-        - pull_request
+    #when:
+      #event:
+        #- tag
+        #- pull_request
 
   - name: github_binary_release
-    image: rancher/drone-images:github-release-s390x
+    image: luistt/drone-images:v0.0.5-github-s390x
     settings:
       api_key:
         from_secret: github_token
@@ -43,12 +43,12 @@ steps:
       - "dist/artifacts/*"
     when:
       instance:
-      - drone-publish.rancher.io
-      ref:
-      - refs/head/master
-      - refs/tags/*
-      event:
-      - tag
+      - drone.suse.dev
+      #ref:
+      #- refs/head/master
+      #- refs/tags/*
+      #event:
+      #- tag
 
 volumes:
   - name: docker
